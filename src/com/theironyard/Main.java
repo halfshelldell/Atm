@@ -1,67 +1,99 @@
 package com.theironyard;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
     static Scanner scanner = new Scanner(System.in);
-
+    static HashMap<String, Double> people = new HashMap<>();
 
     public static void main(String[] args) throws Exception {
         boolean cont = true;
 
-            System.out.println("Welcome!");
+        System.out.println("Welcome!");
+
+        while(cont) {
 
             System.out.println("What is your name?");
             String name = scanner.nextLine();
             if (name.isEmpty()) {
                 throw new Exception("Invalid name input!");
-            } else {
+            }
+            else {
                 System.out.println("Welcome, " + name);
             }
 
-        while(cont) {
+            if (people.get(name) == null) {
+                System.out.println("That name was not recognized, would you like to set up an account!");
+                System.out.println("1 = Yes");
+                System.out.println("2 = No");
+                String choice = scanner.nextLine();
 
-            System.out.println("ATM Menu:");
-            System.out.println("1 = Check Balance");
-            System.out.println("2 = Withdraw");
-            System.out.println("3 = Cancel");
-            String menu = scanner.nextLine();
+                int choiceMenu = Integer.valueOf(choice);
+                if (choiceMenu == 1) {
+                    System.out.println("Set up your new account!");
 
-            int menuNum = Integer.valueOf(menu);
-            if (menuNum == 1) {
-                System.out.println("Your balance is $100");
-            }
-            else if (menuNum == 2) {
-                System.out.println("Withdraw");
-                System.out.println("Type amount you would like to withdraw...");
-                String num = scanner.nextLine();
-                int withInt = Integer.valueOf(num);
-                if (withInt > 100) {
-                    throw new Exception("Insufficient funds in you account");
-                } else if (withInt <= 100) {
-                    System.out.println("Please take your cash");
+                    if (name.isEmpty()) {
+                        throw new Exception("Invalid name input!");
+                    }
+                    people.put(name, 100.0);
+                    System.out.println("Welcome to your new account, " + name);
+                    Double balance = people.get(name);
+                    System.out.println("Your balance is $" + balance);
+                }
+                else if (choiceMenu == 2) {
+                    System.out.println("Thank you and please come again");
+                    continue;
                 }
             }
+            while (true) {
+                System.out.println("ATM Menu:");
+                System.out.println("1 = Check Balance");
+                System.out.println("2 = Withdraw");
+                System.out.println("3 = Cancel");
+                System.out.println("4 = Remove Account");
 
-            else if (menuNum == 3) {
-                System.out.println("Thank you and please come again");
-                System.out.println("Are you sure you want to leave");
 
-                break;
+                String menu = scanner.nextLine();
+
+                int menuNum = Integer.valueOf(menu);
+                if (menuNum == 1) {
+                    System.out.println("Your balance is " + people.get(name));
+                }
+                else if (menuNum == 2) {
+                    System.out.println("Withdraw");
+                    System.out.println("Type amount you would like to withdraw...");
+                    String num = scanner.nextLine();
+                    int withInt = Integer.valueOf(num);
+                    if (withInt > people.get(name)) {
+                        throw new Exception("Insufficient funds in you account");
+                    }
+                    else if (withInt <= people.get(name)) {
+                        System.out.println("Please take your cash");
+                        double oldBalance = people.get(name);
+                        people.put(name, oldBalance - withInt);
+                    }
+                }
+                else if (menuNum == 3) {
+                    System.out.println("Thank you and please come again");
+                    break;
+                }
+                else if (menuNum == 4){
+                    people.remove(name);
+                    System.out.println("Your account has been removed from our system");
+                    break;
+                }
+
+                System.out.println("Would you like to make another transaction? [y/n]");
+                String yesOrNo = scanner.nextLine();
+                if (yesOrNo.equalsIgnoreCase("y")) {
+                    System.out.println("Back to main menu");
+                    ;
+                } else {
+                    System.out.println("\nThank you for banking with us!\n");
+                    break;
+                }
             }
-
-            System.out.println("Would you like to make another transaction? [y/n]");
-            String yesOrNo = scanner.nextLine();
-            if (yesOrNo.equalsIgnoreCase("y")) {
-                System.out.println("Back to main menu");;
-            }
-            else {
-                System.out.println("\nThank you for banking with us!\n");
-                break;
-            }
-
         }
-
     }
-
 }
