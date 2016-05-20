@@ -31,7 +31,7 @@ public class Main {
 
                 int choiceMenu = Integer.valueOf(choice);
                 if (choiceMenu == 1) {
-                    System.out.println("Set up your new account!");
+                    System.out.println("Setting up your new account...");
 
                     if (name.isEmpty()) {
                         throw new Exception("Invalid name input!");
@@ -52,7 +52,7 @@ public class Main {
                 System.out.println("2 = Withdraw");
                 System.out.println("3 = Cancel");
                 System.out.println("4 = Remove Account");
-
+                System.out.println("5 = Deposit Funds");
 
                 String menu = scanner.nextLine();
 
@@ -82,6 +82,21 @@ public class Main {
                     people.remove(name);
                     System.out.println("Your account has been removed from our system");
                     break;
+                }
+
+                else if (menuNum == 5) {
+                    System.out.println("Deposit");
+                    System.out.println("Type amount you would like to deposit...(Cash Only)");
+                    String num = scanner.nextLine();
+                    int oldBalance = Integer.valueOf(num);
+                    if (oldBalance <= 0) {
+                        throw new Exception("No funds to deposit into your account");
+                    }
+                    else if (oldBalance >= people.get(name)) {
+                        System.out.println("Cash has been deposited to your account");
+                        double newBalance = people.get(name);
+                        people.put(name, newBalance + oldBalance);
+                    }
                 }
 
                 System.out.println("Would you like to make another transaction? [y/n]");
