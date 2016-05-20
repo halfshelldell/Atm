@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class Main {
     static Scanner scanner = new Scanner(System.in);
     static HashMap<String, Double> people = new HashMap<>();
+    //static Person person = new Person();
 
     public static void main(String[] args) throws Exception {
         boolean cont = true;
@@ -13,7 +14,7 @@ public class Main {
         System.out.println("Welcome!");
 
         while(cont) {
-
+            //person.chooseName();
             System.out.println("What is your name?");
             String name = scanner.nextLine();
             if (name.isEmpty()) {
